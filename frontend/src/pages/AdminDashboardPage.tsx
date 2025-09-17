@@ -135,7 +135,7 @@ const AdminDashboardPage = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {subscribers.map((sub) => (
+                    {subscribers?.map((sub) => ( //Only map if subscribers is defined
                       <tr key={sub.id}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {sub.email}

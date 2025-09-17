@@ -129,7 +129,7 @@ const Navbar = ({ variant = "dark" }: NavbarProps) => {
         {/* CTA Button */}
         <div className="hidden md:block">
           <Link
-            to="/gpai-tools"
+            to="/user/login"
             className="group relative inline-flex items-center px-6 py-3 font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/25"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -182,7 +182,7 @@ const Navbar = ({ variant = "dark" }: NavbarProps) => {
             Why GPAi
           </a>
           <Link
-            to="/gpai-tools"
+            to="/user/login"
             className="block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium px-6 py-3 rounded-xl mt-4 hover:shadow-lg transition-all"
             onClick={() => setIsMobileMenuOpen(false)}
           >
