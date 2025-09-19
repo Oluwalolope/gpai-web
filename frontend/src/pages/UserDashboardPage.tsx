@@ -70,12 +70,8 @@ const UserDashboardPage = () => {
         }
       </main>
       {/* This is the AI assistant feature to be added */}
-      <div className="fixed bottom-3 right-7 z-10 flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
+      <div className="fixed bottom-3 right-7 z-10 flex max-w-sm items-center gap-x-4 rounded-full bg-white p-4 shadow-lg cursor-pointer outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
         <p className="text-2xl">🤖</p>
-        <div>
-            <div className="text-xl font-medium text-black dark:text-white">AI Assistant</div>
-            <p className="text-gray-500 dark:text-gray-400">This is your AI Assistant!</p>
-        </div>
      </div>
     </div>
   );

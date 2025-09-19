@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import googleIcon from '../assets/google-icon.svg';
+import logo from '../assets/gpai-logo.svg';
+import graphic from '../assets/bg-graphic.png';
 
 
 const UserSignUpPage = () => {
@@ -24,52 +26,72 @@ const UserSignUpPage = () => {
   }
 
     return (
-        <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md text-center">
-                <h1 className="text-3xl font-bold font-poppins text-dark-text mb-2">Create an account</h1>
-                <p className="text-light-text mb-8">Please fill in the details to create an account.</p>
-                {/* Set up Google Authentication */}
-                <button className="w-full border border-primary  text-black font-poppins font-medium text-lg px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-all mb-9">
-                    <img src={googleIcon} alt="google icon" className='size-8 inline-block mr-2' />
-                    Continue with Google
-                </button> 
+        <div className="min-h-screen bg-white p-4">
+            <a href="/" className="text-stone-400 hover:text-black text-sm text-start">
+                <img src={logo} alt="Logo" className='w-20 inline-block' />
+            </a>
+        <div className='flex items-center w-full max-w-[1000px] justify-around mx-auto md:max-h-[520px]'>
+          <div className='flex-1 hidden md:block'>
+            <h1 className='text-5xl font-bold font-poppins text-dark-text mb-8'>Sign up to</h1>
+            <h2 className='text-3xl font-bold font-poppins text-dark-text mb-8'>Enjoy your AI-powered academic tool</h2>
+            <p className="mt-4 text-sm font-poppins text-black inline-block"> If you already have an account <br />You can <a href="/user/login" className="text-primary">Login here!</a></p>
+            <img src={graphic} className='inline-block h-60' />
+          </div>
+          <div className="p-8 w-full max-w-md text-center flex-1">
+            <h3 className="text-3xl font-bold font-poppins text-dark-text mb-8 block text-start">Sign up</h3>
+            
 
 
-                <p className="mb-5 text-sm text-stone-500 uppercase">or</p>
+            <form action={signUpAction}>
+                      <input
+                          type='email'
+                          name='email'
+                          required
+                          placeholder="Enter email"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
+                      />
+                      <input
+                          type="text"
+                          name='user-name'
+                          required
+                          placeholder="Enter username"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
+                      />
+                      <input
+                          type="password"
+                          name='password'
+                          required
+                          placeholder="Enter password"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
+                      />
+                      <input
+                          type="password"
+                          name='confirm-password'
+                          required
+                          placeholder="Re-enter password"
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
+                      />
+                      <button
+                          type="submit"
+                          className="w-full bg-primary text-white font-poppins font-medium text-lg px-8 py-3 rounded-lg hover:bg-blue-700 transition-all"
+                      >
+                          Register
+                      </button>
+                      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+                  </form>
+                  <p className="mt-4 text-sm font-poppins text-black inline-block md:hidden"> Already have an account? <a href="/user/login" className="text-primary">Login here!</a></p>
 
-                <form action={signUpAction}>
-                    <input
-                        type="text"
-                        name='user-name'
-                        required
-                        placeholder="Enter username"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
-                    />
-                    <input
-                        type="password"
-                        name='password'
-                        required
-                        placeholder="Enter password"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
-                    />
-                    <input
-                        type="password"
-                        name='confirm-password'
-                        required
-                        placeholder="Re-enter password"
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
-                    />
-                    <button
-                        type="submit"
-                        className="w-full bg-primary text-white font-poppins font-medium text-lg px-8 py-3 rounded-lg hover:bg-blue-700 transition-all"
-                    >
-                        Register
-                    </button>
-                    {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
-                </form>
-                <p className="mt-4 text-sm text-black">Already have an account? <a href="/user/login" className="text-primary">Login</a></p>
-            </div>
+            <p className="my-5 text-sm text-stone-500">or</p>
+            {/* Set up Google Authentication */}
+            <button className="w-full border border-primary  text-black font-poppins font-medium text-lg px-8 py-3 rounded-lg hover:bg-blue-700 hover:text-white transition-all mb-9">
+                <img src={googleIcon} alt="google icon" className='size-8 inline-block mr-2' />
+                Continue with Google
+            </button>
+
         </div>
+          
+      </div>  
+    </div>
     );
 }
  
