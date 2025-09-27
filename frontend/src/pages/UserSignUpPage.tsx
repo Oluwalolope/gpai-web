@@ -11,11 +11,13 @@ const UserSignUpPage = () => {
 
     const signUpAction = (formData: FormData) => {
     const userName = formData.get('user-name');
+    const userEmail = formData.get('email');
     const password = formData.get('password');
     const confirmPassword = formData.get('confirm-password');
 
     if (password == confirmPassword) {
       sessionStorage.setItem('userName', `${userName}`);
+      sessionStorage.setItem('userEmail', `${userEmail}`);
       sessionStorage.setItem('userPassword', `${password}`);
       sessionStorage.setItem('gpai-user-auth', 'true');
       setError('');

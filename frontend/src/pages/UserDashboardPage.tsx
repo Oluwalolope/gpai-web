@@ -62,7 +62,7 @@ const UserDashboardPage = () => {
         <aside className="bg-white hidden md:block  md:row-span-2 ">
           <SidebarNavigation openTab={openTab} updateOpenTab={handleUpdateOpenTab} />
         </aside>
-        <section className="col-span-4 row-span-2 grid gap-2 md:grid-cols-2 md:grid-rows-2 overflow-x-hidden md:pe-4 sm:pe-6 lg:pe-8">
+        <section className={`col-span-4 row-span-2 overflow-x-hidden ${openTab == 'dashboard' && 'grid gap-2 md:grid-cols-2 md:grid-rows-2 md:pe-4 sm:pe-6 lg:pe-8'}`}>
           { openTab == 'dashboard' && <>
             <GPASnapshotCard />
             <AiAssistantCard />
