@@ -1,3 +1,7 @@
+// type prop = {
+//     handleChange: (identifier: string, value: unknown) => void
+// }
+
 const AcademicSetting = () => {
     return (
         <section className="py-6">
@@ -18,7 +22,7 @@ const AcademicSetting = () => {
 
                 <div>
                     <p className="font-poppins text-dark-text pb-2">Target GPA</p>
-                    <input type="text" placeholder="5.0" className="cursor-pointer border border-black w-full p-1 rounded-sm"   />
+                    <input type="text" inputMode="numeric" placeholder="5.0" className="cursor-pointer border border-black w-full p-1 rounded-sm"   />
                 </div>
 
             </div>

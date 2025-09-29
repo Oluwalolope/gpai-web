@@ -1,42 +1,33 @@
-import { useState } from "react";
-import OneTimeCalculator from "../calculators/OneTimeCalculator";
-import SemesterCalculator from "../calculators/SemesterCalculator";
 import YearCalculator from "../calculators/YearCalculator";
+import HeaderDashboard from "./HeaderDashboard";
+import SidebarNavigation from "./SidebarNavigation";
 
 
 const GPACalculator = () => {
-  const [mode, setMode] = useState('one-time');
+  return (
+    <div className="min-h-dvh bg-slate-50 overflow-x-hidden pb-16 md:pb-0  md:flex md:flex-col">
+      {/* Header */}
+      <HeaderDashboard />
 
-    const renderCalculator = () => {
-    switch (mode) {
-      case "one-time":
-        // For now, we'll use a placeholder, but you can swap this with your real calculator
-        return <OneTimeCalculator />;
-      case "semester":
-        return <SemesterCalculator />;
-      case "year":
-        return <YearCalculator />;
-      default:
-        return null;
-    }
-  };
-    return (
-    <main className="row-span-2 col-span-2">
-         <menu className="flex border border-primary rounded-lg w-full max-w-[600px] mx-auto mt-8 mb-8">
-            <button className={`w-1/3 font-bold rounded-tl-lg rounded-bl-lg px-3 py-2 text-gray-700 hover:bg-primary hover:text-white ${mode === "one-time" ? "bg-primary text-white" : ""}`} onClick={() => setMode("one-time")}>One-Time Calculator</button>
-            <button className={`w-1/3 font-bold  px-3 py-2 text-gray-700 hover:bg-primary hover:text-white ${mode === "semester" ? "bg-primary text-white" : ""}`} onClick={() => setMode("semester")}>Semester Calculator</button>
-            <button className={`w-1/3 font-bold rounded-tr-lg rounded-br-lg px-3 py-2 text-gray-700 hover:bg-primary hover:text-white ${mode === "year" ? "bg-primary text-white" : ""}`} onClick={() => setMode("year")}>Year Calculator</button>
-        </menu>
-        {mode && 
-            <div className="text-center mb-12">
-                {/* Header for the tools section */}
-                <h3 className="text-lg font-semibold text-gray-700">GPAi {mode?.replace("-", " ")} Calculator</h3>
-                {/* Render the selected calculator */}
-                {renderCalculator()}
-            </div>
-        }
-      </main>
-    );
+      {/* Main Content */}
+      <main className="container mx-auto max-w-7xl px-4 md:px-0 md:grid md:grid-cols-5 md:grid-rows-2 md:gap-4 md:flex-1">
+        {/* Desktop Navigation */}
+        <aside className="bg-white hidden md:block  md:row-span-2 ">
+          <SidebarNavigation openTab="gpa-calculator" />
+        </aside>
+        <section className={'col-span-4 row-span-2'}>
+        {/* <h3 className="text-lg font-semibold text-gray-700">GPAi Calculator</h3> */}
+        
+        <div className="text-center mt-3 mb-12">
+          <YearCalculator />
+        </div>
+          
+        </section>
+     </main>
+          
+      {/* <MobileNavigation openTab={openTab} updateOpenTab={handleUpdateOpenTab} /> */}
+    </div>
+  );
 }
  
 export default GPACalculator;

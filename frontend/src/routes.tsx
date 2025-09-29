@@ -8,6 +8,11 @@ import UserDashboardPage from "./pages/UserDashboardPage"; // <-- Import new pag
 import AdminDashboardPage from "./pages/AdminDashboardPage"; // <-- Import new page
 import ProtectedRoute from "./components/admin/ProtectedRoute"; 
 import UserSignUpPage from "./pages/UserSignUpPage";
+import GPACalculator from "./components/dashboard/GPACalculator";
+import StudyPlan from "./components/dashboard/StudyPlan";
+import AiAssistant from "./components/dashboard/AiAssistant";
+import Analytics from "./components/dashboard/Analytics";
+import UserSettings from "./components/dashboard/UserSettings";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +42,50 @@ const router = createBrowserRouter([
         <UserDashboardPage />
       </ProtectedRoute>
     ),
+  },
+  {
+    path: "/user/dashboard/gpa-calculator", // The user dashboard gpa calculator
+    element: (
+      <ProtectedRoute role="user">
+        <GPACalculator />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/user/dashboard/study-plan", // The user dashboard study plan
+    element: (
+      <ProtectedRoute role="user">
+        <StudyPlan />,
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/user/dashboard/ai-assistant", // The user dashboard AI assistant
+    element: (
+      <ProtectedRoute role="user">
+        <AiAssistant />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/user/dashboard/analytics", // The user dashboard analytics
+    element: (
+      <ProtectedRoute role="user">
+        <Analytics />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/user/dashboard/settings", // The user dashboard settings
+    element: (
+      <ProtectedRoute role="user">
+        <UserSettings />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/login", // The public-facing login page
+    element: <AdminLoginPage />,
   },
   {
     path: "/admin/login", // The public-facing login page
