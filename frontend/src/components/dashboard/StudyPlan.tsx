@@ -11,15 +11,13 @@ const StudyPlan = () => {
       <main className="container mx-auto max-w-7xl px-4 md:px-0 md:grid md:grid-cols-5 md:grid-rows-2 md:gap-4 md:flex-1">
         {/* Desktop Navigation */}
         <aside className="bg-white hidden md:block  md:row-span-2 ">
-          <SidebarNavigation openTab="study-plan" />
+          <SidebarNavigation />
         </aside>
         <section className={'col-span-4 row-span-2'}>
             <h1 className="text-2xl font-bold font-poppins text-dark-text">Study Plan</h1>
           
         </section>
      </main>
-          
-      {/* <MobileNavigation openTab={openTab} updateOpenTab={handleUpdateOpenTab} /> */}
     </div>
   );
 }

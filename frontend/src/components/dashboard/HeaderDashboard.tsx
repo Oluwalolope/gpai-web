@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/gpai-logo.svg';
+import MobileNavigation from './MobileNavigation';
 
 
 const HeaderDashboard = () => {
@@ -16,6 +17,7 @@ const HeaderDashboard = () => {
 
     return (
         <header className="bg-white sticky top-0 z-20 max-w-7xl mx-auto container px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+          <MobileNavigation />
           <img src={logo} alt="GPAI logo" className="w-20 inline-block" />
           <div className="flex gap-5">
             <div className="flex items-center gap-2">

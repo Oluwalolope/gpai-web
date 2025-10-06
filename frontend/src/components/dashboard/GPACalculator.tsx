@@ -13,7 +13,7 @@ const GPACalculator = () => {
       <main className="container mx-auto max-w-7xl px-4 md:px-0 md:grid md:grid-cols-5 md:grid-rows-2 md:gap-4 md:flex-1">
         {/* Desktop Navigation */}
         <aside className="bg-white hidden md:block  md:row-span-2 ">
-          <SidebarNavigation openTab="gpa-calculator" />
+          <SidebarNavigation  />
         </aside>
         <section className={'col-span-4 row-span-2'}>
         {/* <h3 className="text-lg font-semibold text-gray-700">GPAi Calculator</h3> */}
@@ -24,8 +24,6 @@ const GPACalculator = () => {
           
         </section>
      </main>
-          
-      {/* <MobileNavigation openTab={openTab} updateOpenTab={handleUpdateOpenTab} /> */}
     </div>
   );
 }

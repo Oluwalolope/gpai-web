@@ -4,7 +4,7 @@ type props = {
 
 const GPASnapshotCard = ({targetGPA}: props) => {
     return (
-        <section className="bg-white rounded-xl shadow-sm py-4 px-8 md:col-span-1 md:mt-8">
+        <section className="bg-white rounded-xl shadow-sm py-4 px-8 col-span-2 w-full md:col-span-1">
             <h2 className="text-2xl font-bold font-poppins text-dark-text mb-4">GPA Snapshot</h2>
             <div className="flex justify-between">
                 <div>
