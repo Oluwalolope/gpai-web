@@ -16,7 +16,6 @@ const AcademicSetting = () => {
                         <option value="5">5.0 Scale</option>
                         <option value="7">7.0 Scale</option>
                         <option value="10">10.0 Scale</option>
-                        <option value="letter">Letter</option>
                     </select>
                 </div>
 
