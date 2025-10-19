@@ -19,3 +19,14 @@
 * {
   box-sizing: border-box;
 }
+
+/* Adding the nice gradient on the forecaster output component  */
+.conic-gradient {
+  * {
+    cursor: default;
+  }
+
+  background: conic-gradient(
+   from 45deg ,#a855f7, #3b82f6, #86efac
+  );
+}

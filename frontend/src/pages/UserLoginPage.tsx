@@ -10,15 +10,16 @@ const UserLoginPage = () => {
     const navigate = useNavigate();
 
     const USER_NAME = sessionStorage.getItem('userName');
+    const USER_EMAIL = sessionStorage.getItem('userEmail');
     const USER_PASSWORD = sessionStorage.getItem('userPassword');
 
   const loginAction = (formData: FormData) => {
-    const userName = formData.get('user-name');
+    const userIdentifier = formData.get('user-identifier');
     const password = formData.get('password');
 
-    if (userName === USER_NAME && password === USER_PASSWORD) {
+    if ((userIdentifier === USER_NAME || userIdentifier === USER_EMAIL) && password === USER_PASSWORD) {
       // On success, set a flag in session storage and redirect
-      sessionStorage.setItem('userName', `${userName}`);
+      sessionStorage.setItem('user', `${userIdentifier}`);
       sessionStorage.setItem('gpai-user-auth', 'true');
       navigate('/user/dashboard');
     } else {
@@ -45,7 +46,7 @@ const UserLoginPage = () => {
           <form action={loginAction}>
             <input
               type="text"
-              name='user-name'
+              name='user-identifier'
               placeholder="Enter email or username"
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary mb-4"
             />

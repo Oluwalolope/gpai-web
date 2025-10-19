@@ -9,7 +9,7 @@ import AdminDashboardPage from "./pages/AdminDashboardPage"; // <-- Import new p
 import ProtectedRoute from "./components/admin/ProtectedRoute"; 
 import UserSignUpPage from "./pages/UserSignUpPage";
 import GPACalculator from "./components/dashboard/GPACalculator";
-import StudyPlan from "./components/dashboard/StudyPlan";
+import Forecaster from "./components/dashboard/Forecaster";
 import AiAssistant from "./components/dashboard/AiAssistant";
 import Analytics from "./components/dashboard/Analytics";
 import UserSettings from "./components/dashboard/UserSettings";
@@ -52,10 +52,10 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/user/dashboard/study-plan", // The user dashboard study plan
+    path: "/user/dashboard/forecaster", // The user dashboard study plan
     element: (
       <ProtectedRoute role="user">
-        <StudyPlan />,
+        <Forecaster />,
       </ProtectedRoute>
     ),
   },
