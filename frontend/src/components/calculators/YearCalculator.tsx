@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 // --- Type Definitions ---
 type Course = { id: number; name: string; units: string; score: string };
@@ -386,7 +387,7 @@ const CourseRow = ({
   onRemoveCourse,
   isRemoveDisabled,
 }: CourseRowProps) => (
-  <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
+  <motion.div layout='position' animate={{opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25}}}  className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center">
     <input
       type="text"
       placeholder={`Course ${index + 1} Name`}
@@ -425,7 +426,7 @@ const CourseRow = ({
     >
       &times;
     </button>
-  </div>
+  </motion.div>
 );
 
 export default YearCalculator;

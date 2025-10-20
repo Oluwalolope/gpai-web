@@ -9,7 +9,7 @@ const forecastedGPA = 4.32; // This value can be dynamically calculated based on
 
 const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
   return (
-    <div className="flex-1 px-10 py-5">
+    <motion.div animate={{opacity: [0, 0.5 ,1], scale: [0.8, 0.85, 0.9, 0.95, 1], transitionDuration: 300}} className="flex-1 px-10 py-5">
       <h2 className="text-xl font-medium font-poppins capitalize">
         minimum average grade needed
       </h2>
@@ -50,7 +50,7 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
 
         <div>
           <ScenarioSlider />
-          <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-col gap-y-3 md:flex-row justify-between items-center">
             <p className="text-[16px] font-normal font-inter mt-2 text-stone-600">
               This gets you to{" "}
               <span className="font-bold">{forecastedGPA}</span> CGPA!
@@ -61,7 +61,7 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
               transition={{ type: "spring", stiffness: 500 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group mt-3 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-xl w-full max-w-[150px]"
+              className="group mt-3 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl shadow-xl w-full md:max-w-[150px]"
             >
               <span className="flex items-center justify-center">
                 <svg
@@ -84,7 +84,7 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

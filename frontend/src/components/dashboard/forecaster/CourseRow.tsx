@@ -1,7 +1,5 @@
-/**
- * CourseRow component for rendering a single course row in the table.
- */
-type Course = { id: number; name: string; units: string; };
+import { motion } from "framer-motion";
+type Course = { id: number; name: string; units: string };
 
 type CourseRowProps = {
   course: Course;
@@ -18,7 +16,8 @@ const CourseRow = ({
   onRemoveCourse,
   isRemoveDisabled,
 }: CourseRowProps) => (
-  <div className="flex flex-row gap-2 justify-between items-center">
+  <motion.li layout='position' animate={{opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25}}}   className="flex flex-row gap-2 justify-between items-center"
+  >
     <input
       type="text"
       placeholder={`Course ${index + 1} Name`}
@@ -44,7 +43,7 @@ const CourseRow = ({
     >
       &times;
     </button>
-  </div>
+  </motion.li>
 );
 
 export default CourseRow;

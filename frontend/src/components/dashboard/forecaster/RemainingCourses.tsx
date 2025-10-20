@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CourseRow from "./CourseRow";
 import { motion } from "framer-motion";
 
 type Course = { id: number; name: string; units: string };
 
-const RemainingCourses = () => {
+type prop = {
+  handleForecast: () => void
+}
+
+const RemainingCourses = ({handleForecast}:prop) => {
+  const remainingCourseListRef = useRef<HTMLUListElement>(null);
   const [remainingCourses, setRemainingCourses] = useState<Course[]>([
     { id: 1, name: "", units: "" },
   ]);
@@ -23,11 +28,21 @@ const RemainingCourses = () => {
     });
   };
 
+  const scrollToBottomOfCourseList = () => {
+    remainingCourseListRef.current!.scrollTo({
+      top: remainingCourseListRef.current!.scrollHeight,
+      behavior: "smooth", // smooth scrolling
+    });
+  };
+
   const addCourse = () => {
     setRemainingCourses((prevRemainingCourses) => [
       ...prevRemainingCourses,
       { id: Date.now(), name: "", units: "" },
     ]);
+
+    // scroll to bottom of list 100ms after the user adds a new course
+    setTimeout(scrollToBottomOfCourseList, 100);
   };
 
   const removeCourse = (id: number) => {
@@ -38,6 +53,7 @@ const RemainingCourses = () => {
     });
   };
 
+
   return (
     <div className="mt-6 h-[60%] flex flex-col gap-y-2">
       <h2 className="text-lg font-medium font-poppins capitalize h-[10%]">
@@ -45,7 +61,7 @@ const RemainingCourses = () => {
       </h2>
 
       <form className="pt-4 border-t border-slate-200 h-[90%] flex flex-col justify-between">
-        <div className="overflow-y-auto overflow-x-hidden space-y-4 max-h-[100px] mb-3 scroll-smooth">
+        <motion.ul ref={remainingCourseListRef}  className="overflow-y-auto overflow-x-hidden space-y-4 max-h-[100px] mb-3 scroll-smooth list-none">
           {remainingCourses.map((course: Course, index: number) => (
             <CourseRow
               key={course.id}
@@ -61,7 +77,7 @@ const RemainingCourses = () => {
               isRemoveDisabled={remainingCourses.length === 1}
             />
           ))}
-        </div>
+        </motion.ul>
         <button
           type="button"
           onClick={() => addCourse()}
@@ -75,7 +91,7 @@ const RemainingCourses = () => {
           transition={{ type: "spring", stiffness: 500 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={addCourse}
+          onClick={handleForecast}
           className="group mt-3 px-10 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl hover:scale-105 shadow-xl w-full"
         >
           <span className="flex items-center justify-center">

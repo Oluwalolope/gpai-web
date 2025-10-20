@@ -1,6 +1,33 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
+// const marks = [
+//   {
+//     value: 0,
+//     label: "F",
+//   },
+//   {
+//     value: 16.67,
+//     label: "E",
+//   },
+//   {
+//     value: 33.34,
+//     label: "D",
+//   },
+//   {
+//     value: 50,
+//     label: "C",
+//   },
+//   {
+//     value: 70,
+//     label: "B",
+//   },
+//   {
+//     value: 100,
+//     label: "A",
+//   }
+// ];
+
 const marks = [
   {
     value: 0,
