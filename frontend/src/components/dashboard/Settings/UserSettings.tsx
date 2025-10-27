@@ -1,8 +1,8 @@
-import AcademicSetting from "./Settings/AcademicSetting";
-import ProfileSetting from "./Settings/ProfileSetting";
-import UserPreference from "./Settings/UserPreference";
-import HeaderDashboard from "./HeaderDashboard";
-import SidebarNavigation from "./SidebarNavigation";
+import AcademicSetting from "./AcademicSetting";
+import ProfileSetting from "./ProfileSetting";
+import UserPreference from "./UserPreference";
+import HeaderDashboard from "../UI/HeaderDashboard";
+import SidebarNavigation from "../UI/SidebarNavigation";
 
 const UserSettings = () => {
 
@@ -14,7 +14,7 @@ const UserSettings = () => {
         <SidebarNavigation />
         
         <section className={'col-span-4 row-span-2'}>
-            <article className="bg-white shadow-sm border my-3 rounded-lg px-5 w-full">
+            <article className="py-3 px-5 gap-3 h-full w-full space-y-4">
                 <ProfileSetting />
                 <UserPreference />
                 <AcademicSetting />

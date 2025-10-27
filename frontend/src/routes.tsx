@@ -8,11 +8,11 @@ import UserDashboardPage from "./pages/UserDashboardPage"; // <-- Import new pag
 import AdminDashboardPage from "./pages/AdminDashboardPage"; // <-- Import new page
 import ProtectedRoute from "./components/admin/ProtectedRoute"; 
 import UserSignUpPage from "./pages/UserSignUpPage";
-import GPACalculator from "./components/dashboard/GPACalculator";
-import Forecaster from "./components/dashboard/Forecaster";
-import AiAssistant from "./components/dashboard/AiAssistant";
-import Analytics from "./components/dashboard/Analytics";
-import UserSettings from "./components/dashboard/UserSettings";
+import GPACalculator from "./components/dashboard/calculator/GPACalculator";
+import Forecaster from "./components/dashboard/forecaster/Forecaster";
+import AiAssistant from "./components/dashboard/chatbot/AiAssistant";
+import Analytics from "./components/dashboard/analytics/Analytics";
+import UserSettings from "./components/dashboard/settings/UserSettings";
 
 const router = createBrowserRouter([
   {

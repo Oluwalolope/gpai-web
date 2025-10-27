@@ -94,7 +94,7 @@ const RemainingCourses = ({handleForecast}:prop) => {
           onClick={handleForecast}
           className="group mt-3 px-10 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold rounded-2xl hover:scale-105 shadow-xl w-full"
         >
-          <span className="flex items-center justify-center">
+          <span className="flex items-center justify-center text-[14px] md:text-[16px]">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

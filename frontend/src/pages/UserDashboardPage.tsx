@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import SidebarNavigation from "../components/dashboard/SidebarNavigation";
-import GPASnapshotCard from "../components/dashboard/GPASnapshotCard";
-import GPAAnalyticsCard from "../components/dashboard/GPAAnalyticsCard";
-import AiAssistantCard from "../components/dashboard/AiAssistantCard";
-import StudyScheduleCard from "../components/dashboard/StudyScheduleCard";
-import HeaderDashboard from "../components/dashboard/HeaderDashboard";
+import SidebarNavigation from "../components/dashboard/UI/SidebarNavigation";
+import GPASnapshotCard from "../components/dashboard/mainDashboard/GPASnapshotCard";
+import GPAAnalyticsCard from "../components/dashboard/mainDashboard/GPAAnalyticsCard";
+import AiAssistantCard from "../components/dashboard/mainDashboard/AiAssistantCard";
+import StudyScheduleCard from "../components/dashboard/mainDashboard/StudyScheduleCard";
+import HeaderDashboard from "../components/dashboard/UI/HeaderDashboard";
 
 
 const UserDashboardPage = () => {
@@ -16,7 +16,7 @@ const UserDashboardPage = () => {
         <SidebarNavigation />
 
         <section className={'md:col-span-4 md:row-span-2 flex flex-col py-4 md:grid gap-2 md:grid-cols-2 md:grid-rows-2 md:pe-4 md:py-8'}>
-          <GPASnapshotCard targetGPA={'4.50'} />
+          <GPASnapshotCard />
           <AiAssistantCard />
           <GPAAnalyticsCard />
           <StudyScheduleCard />

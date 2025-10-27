@@ -1,4 +1,4 @@
-import LineGraph from "./graph/LineGraph";
+import LineGraph from "../analytics/graph/LineGraph";
 
 const GPAAnalyticsCard = () => {
     return (

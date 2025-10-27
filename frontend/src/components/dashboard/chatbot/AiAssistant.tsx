@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import ChatInterface from "./chatbot/ChatInterface";
-import HeaderDashboard from "./HeaderDashboard";
-import SidebarNavigation from "./SidebarNavigation";
+import ChatInterface from "./ChatInterface";
+import HeaderDashboard from "../UI/HeaderDashboard";
+import SidebarNavigation from "../UI/SidebarNavigation";
 
 
 const AiAssistant = () => {

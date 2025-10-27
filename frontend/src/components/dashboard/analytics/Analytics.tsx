@@ -1,6 +1,6 @@
 import LineGraph from "./graph/LineGraph";
-import HeaderDashboard from "./HeaderDashboard";
-import SidebarNavigation from "./SidebarNavigation";
+import HeaderDashboard from "../UI/HeaderDashboard";
+import SidebarNavigation from "../UI/SidebarNavigation";
 
 const Analytics = () => {
       return (

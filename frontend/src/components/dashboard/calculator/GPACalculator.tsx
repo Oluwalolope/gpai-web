@@ -1,6 +1,6 @@
-import YearCalculator from "../calculators/YearCalculator";
-import HeaderDashboard from "./HeaderDashboard";
-import SidebarNavigation from "./SidebarNavigation";
+import HeaderDashboard from "../UI/HeaderDashboard";
+import SidebarNavigation from "../UI/SidebarNavigation";
+import Calculator from "./Calculator";
 
 
 const GPACalculator = () => {
@@ -15,7 +15,7 @@ const GPACalculator = () => {
         {/* <h3 className="text-lg font-semibold text-gray-700">GPAi Calculator</h3> */}
         
         <div className="text-center mt-3 mb-12">
-          <YearCalculator />
+          <Calculator />
         </div>
           
         </section>

@@ -1,16 +1,19 @@
 import { AnimatePresence, motion } from "framer-motion";
-import RemainingCourses from "./forecaster/RemainingCourses";
-import HeaderDashboard from "./HeaderDashboard";
-import SidebarNavigation from "./SidebarNavigation";
-import ForecasterOutput from "./forecaster/ForecasterOutput";
-import { useState } from "react";
+import RemainingCourses from "./RemainingCourses";
+import HeaderDashboard from "../UI/HeaderDashboard";
+import SidebarNavigation from "../UI/SidebarNavigation";
+import ForecasterOutput from "./ForecasterOutput";
+import { useContext, useState } from "react";
+import { calculateFinalCGPA } from "../util/calculations";
+import UserDashboardContext from "../../../store/UserDashboardContext";
 
-const gpaScale = 5.0;
-const calculatedGPA = 3.64;
-const targetGPA = 4.5;
 
 const Forecaster = () => {
   const [hasUserForecasted, setHasUserForecasted] = useState<boolean>(false);
+  const userDashboardCtx = useContext(UserDashboardContext);
+
+  const gpaScale = 5.0;
+  const calculatedCGPA = calculateFinalCGPA(userDashboardCtx.courseHistory);
 
   const handleForecast = () => {
     setHasUserForecasted(true);
@@ -45,13 +48,13 @@ const Forecaster = () => {
                   {/* current GPA */}
                   <div className="flex flex-row gap-3 px-2 justify-between items-center rounded-lg h-[50px] shadow-lg shadow-black/10 border border-white/50 mb-3">
                     <label htmlFor="currentGPA" className="text-md font-normal font-inter capitalize">Current CGPA</label>
-                    <input name="currentGPA" id="currentGPA" type="text" typeof="numeric" step={0.01} min={0} max={gpaScale} value={calculatedGPA} disabled  className="max-w-12 h-[70%] rounded-lg py-1 px-2 bg-slate-100/20" />
+                    <div className="max-w-12 h-[70%] rounded-lg py-1 px-1 bg-slate-100/20">{calculatedCGPA? calculatedCGPA : 'N/A'}</div>
                   </div>
                   
                   {/* target GPA */}
                   <div className="flex flex-row gap-3 px-2 justify-between items-center rounded-lg h-[50px] shadow-lg shadow-black/10 border border-white/50 mb-3">
                     <label htmlFor="targetGPA" className="text-md font-normal font-inter capitalize">Target CGPA</label>
-                    <input name="targetGPA" id="targetGPA" type="text" typeof="numeric" step={0.01} min={0} max={gpaScale} value={targetGPA} className="max-w-12 h-[70%] rounded-lg py-1 px-2 bg-slate-100/20" />
+                    <input name="targetGPA" id="targetGPA" type="text" typeof="numeric" placeholder="5.00" max={gpaScale} onChange={userDashboardCtx.handleTargetCGPAChange} value={userDashboardCtx.targetCGPA? userDashboardCtx.targetCGPA : ''} className="max-w-12 h-[70%] rounded-lg py-1 px-1 bg-slate-100/20" />
                   </div>
                 </div>
 

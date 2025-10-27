@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from '../../assets/gpai-logo.svg';
+import logo from '../../../assets/gpai-logo.svg';
 
 const NAV_ITEMS = [
     {

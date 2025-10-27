@@ -10,7 +10,7 @@ const forecastedGPA = 4.32; // This value can be dynamically calculated based on
 const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
   return (
     <motion.div animate={{opacity: [0, 0.5 ,1], scale: [0.8, 0.85, 0.9, 0.95, 1], transitionDuration: 300}} className="flex-1 px-10 py-5">
-      <h2 className="text-xl font-medium font-poppins capitalize">
+      <h2 className="text-xl font-medium font-poppins text-center md:text-start capitalize">
         minimum average grade needed
       </h2>
 

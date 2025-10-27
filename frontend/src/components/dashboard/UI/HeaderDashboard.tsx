@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../../assets/gpai-logo.svg';
+import logo from '../../../assets/gpai-logo.svg';
 import MobileNavigation from './MobileNavigation';
 
 
