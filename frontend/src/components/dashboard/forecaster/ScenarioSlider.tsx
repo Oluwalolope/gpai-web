@@ -4,9 +4,6 @@ import { useContext } from "react";
 import UserDashboardContext from "../../../store/UserDashboardContext";
 import { calculateGPAForSpecificScenarios } from "../util/calculations";
 
-const valuetext = (value: number) => {
-  return `${value}`;
-};
 
 type props = {
   handleForecastedCGPAChange: (value: number) => void;
@@ -67,21 +64,26 @@ const ScenarioSlider = ({ handleForecastedCGPAChange }: props) => {
     ];
   };
 
-  const handleClick = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleClick = (value: number) => {
     let divider = 20;
-    let value = 100;
-    value = parseInt(event.target.value);
+    // let value = 100;
+    // value = parseInt(event.target.value);
 
     if (userDashboardCtx.gradeScale === "fourPoint") {
       divider = 25;
     }
-
+    
     const gradePointScenario = value / divider;
-
+    
     const result = parseFloat(calculateGPAForSpecificScenarios(userDashboardCtx.courseHistory, userDashboardCtx.remainingCourses, gradePointScenario)!);
-
+    
     handleForecastedCGPAChange(result!);
   }
+
+  const valuetext = (value: number) => {
+    handleClick(value);
+    return `${value}`;
+  };
 
   return (
     <Box>
@@ -90,8 +92,6 @@ const ScenarioSlider = ({ handleForecastedCGPAChange }: props) => {
         defaultValue={100}
         getAriaValueText={valuetext}
         step={userDashboardCtx.gradeScale === "fivePoint" ? 20 : 25}
-        // track={true}
-        onChange={handleClick}
         marks={marks}
       />
     </Box>

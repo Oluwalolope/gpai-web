@@ -42,7 +42,7 @@ if (localStorage.getItem("targetCGPA")) {
   storedTargetCGPA = JSON.parse(localStorage.getItem("targetCGPA")!);
 }
 
-let storedGradeScale = "fivePoint";
+let storedGradeScale: 'fourPoint' | 'fivePoint' = "fivePoint";
 
 if (localStorage.getItem("gradeScale")) {
   storedGradeScale = JSON.parse(localStorage.getItem("gradeScale")!);
@@ -63,7 +63,7 @@ const UserDashboardContextProvider = ({
   const [targetCGPA, setTargetCGPA] = useState<number | string | null>(
     storedTargetCGPA
   );
-  const [gradeScale, setGradeScale] = useState<string>(storedGradeScale);
+  const [gradeScale, setGradeScale] = useState<'fourPoint' | 'fivePoint'>(storedGradeScale!);
 
   const addAcademicYear = () => {
     setCourseHistory((prevCourseHistory) => {
@@ -411,7 +411,7 @@ const UserDashboardContextProvider = ({
     setTargetCGPA(value);
   };
 
-  const handleGradeScaleChange = (grade: string) => {
+  const handleGradeScaleChange = (grade: 'fourPoint' | 'fivePoint') => {
     let max = "";
 
     if (grade == "fourPoint") {

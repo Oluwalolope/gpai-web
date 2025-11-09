@@ -12,7 +12,7 @@ export type UserDashboard = {
 
   targetCGPA?: number | string | null;
   gradeScale?: "fourPoint" | "fivePoint";
-  handleGradeScaleChange: (gradeScale: string) => void;
+  handleGradeScaleChange: (gradeScale: 'fourPoint' | 'fivePoint') => void;
   handleTargetCGPAChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
   addAcademicYear: () => void;

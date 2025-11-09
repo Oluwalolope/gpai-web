@@ -1,26 +1,25 @@
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select  from '@mui/material/Select';
-import type { SelectChangeEvent } from '@mui/material/Select';
 import { useContext, useState } from 'react';
 import UserDashboardContext from '../../../store/UserDashboardContext';
 
 
 
 const GradeScaleSelectMenu = () => {
-  const [gradeScale, setGradeScale] = useState('fivePoint');
+  const [gradeScale, setGradeScale] = useState<'fourPoint' | 'fivePoint'>('fivePoint');
   const userDashboardCtx = useContext(UserDashboardContext);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setGradeScale(event.target.value);
-    userDashboardCtx.handleGradeScaleChange(event.target.value);
+  const handleChange = (value: 'fourPoint' | 'fivePoint') => {
+    setGradeScale(value);
+    userDashboardCtx.handleGradeScaleChange(value);
   };
 
   return (
       <FormControl sx={{ m: 1, width: '100%' }} size="small">
         <Select
           value={gradeScale}
-          onChange={handleChange}
+          onChange={(e) => handleChange(e.target.value)}
           displayEmpty
           inputProps={{ 'aria-label': 'Without label' }}
         >

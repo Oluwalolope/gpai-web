@@ -49,9 +49,6 @@ const LineGraph  = () => {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
-            legend: {
-                position: "bottom"
-            },
             title: {
                 display: true,
                 text: 'Cumulative Grade Point Average per semester'
