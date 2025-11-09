@@ -3,7 +3,7 @@ import SidebarNavigation from "../components/dashboard/UI/SidebarNavigation";
 import GPASnapshotCard from "../components/dashboard/mainDashboard/GPASnapshotCard";
 import GPAAnalyticsCard from "../components/dashboard/mainDashboard/GPAAnalyticsCard";
 import AiAssistantCard from "../components/dashboard/mainDashboard/AiAssistantCard";
-import StudyScheduleCard from "../components/dashboard/mainDashboard/StudyScheduleCard";
+import ForecasterCard from "../components/dashboard/mainDashboard/ForecasterCard";
 import HeaderDashboard from "../components/dashboard/UI/HeaderDashboard";
 
 
@@ -19,7 +19,7 @@ const UserDashboardPage = () => {
           <GPASnapshotCard />
           <AiAssistantCard />
           <GPAAnalyticsCard />
-          <StudyScheduleCard />
+          <ForecasterCard />
         </section>
      </main>
     </div>

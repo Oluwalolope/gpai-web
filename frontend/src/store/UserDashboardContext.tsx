@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 // --- Type Definitions ---
-export type Course = { id: number; name: string; units: string; score: string };
+export type Course = { id: number; name: string; units: string; gradePoint: string };
 export type Semester = { id: number; name: string; courses: Course[] };
 export type AcademicYear = { id: number; name: string; semesters: Semester[] };
 
@@ -9,6 +9,8 @@ export type UserDashboard = {
   courseHistory: AcademicYear[];
 
   targetCGPA?: number | string | null;
+  gradeScale?: string;
+  handleGradeScaleChange: (gradeScale: string) => void;
   handleTargetCGPAChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 
   addAcademicYear: () => void;
@@ -27,7 +29,9 @@ export type UserDashboard = {
 const UserDashboardContext = createContext<UserDashboard>({
   courseHistory: [],
   targetCGPA: null,
+  gradeScale: '',
   handleTargetCGPAChange: () => {},
+  handleGradeScaleChange: () => {},
   addAcademicYear: () => {},
   removeAcademicYear: () => {},
   addSemesterToAcademicYear: () => {},

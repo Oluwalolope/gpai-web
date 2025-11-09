@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import MarkingScheme from "./MarkingScheme";
 import UserDashboardContext from "../../../store/UserDashboardContext";
+import GradeScaleSelectMenu from "./GradingScaleSelectMenu";
 
 const AcademicSetting = () => {
     const userDashboardCtx = useContext(UserDashboardContext);
@@ -9,28 +9,17 @@ const AcademicSetting = () => {
             <h1 className="text-2xl font-bold font-poppins text-dark-text pb-4">Academic</h1>
 
             {/* Academic */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-row gap-x-6">
                 <div className="pb-3 flex-1">
                     <p className="font-poppins text-dark-text pb-2">Grading Scale</p>
-                    <select name="gradingScale" id="gradingScale" className="w-full cursor-pointer px-3 py-2 flex-1 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary">
-                        <option value="4">4.0 Scale</option>
-                        <option value="5">5.0 Scale</option>
-                        <option value="7">7.0 Scale</option>
-                        <option value="10">10.0 Scale</option>
-                    </select>
+                    <GradeScaleSelectMenu />
                 </div>
 
                 <div className="flex-1">
                     <p className="font-poppins text-dark-text pb-2">Target GPA</p>
-                    <input type="text" inputMode="numeric" placeholder="5.00" className="w-full cursor-pointer px-3 py-2 flex-1 rounded-lg border border-slate-300 outline-none focus:ring-2 focus:ring-primary" onChange={(e) => userDashboardCtx.handleTargetCGPAChange(e)} value={userDashboardCtx.targetCGPA? userDashboardCtx.targetCGPA : ''} />
+                    <input type="text" inputMode="numeric" placeholder="5.00" className="w-full h-[40px] cursor-pointer m-2 ms-0 px-3 py-2 flex-1 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]" onChange={(e) => userDashboardCtx.handleTargetCGPAChange(e)} value={userDashboardCtx.targetCGPA? userDashboardCtx.targetCGPA : ''} />
                 </div>
             </div>
-
-            <div className="border-t border-slate-200 mt-4 pt-4">
-                <h2 className="text-2xl font-bold font-poppins text-dark-text pb-4 capitalize">marking scheme</h2>
-                <MarkingScheme handleForecast={() => console.log('yo')} />
-            </div>
-
         </section>
     );
 }

@@ -58,7 +58,7 @@ const SidebarNavigation = () => {
                     <ul className="flex flex-col max-h-[700px] gap-6  h-full rounded-md justify-evenly list-none">
                         {NAV_ITEMS.map((nav_item, index) =>
                             <li key={index}>
-                                <button onClick={() => navigate(`${nav_item.href}`)} className={`flex rounded-md hover:bg-[#1E293B] text-white gap-2 px-4 py-3 ${location.pathname === nav_item.href && 'bg-[#1E293B]'}`}>
+                                <button onClick={() => navigate(`${nav_item.href}`)} className={`flex rounded-md w-full hover:bg-[#1E293B] text-white gap-2 px-4 py-3 ${location.pathname === nav_item.href && 'bg-[#25354f]'}`}>
                                     {nav_item.icon}
                                     {nav_item.name}
                                 </button>

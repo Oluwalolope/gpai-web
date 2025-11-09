@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
-type Course = { id: number; name: string; units: string };
+import type { Course } from "../../../store/UserDashboardContext";
+import GradeSelectMenu from "./GradeSelectMenu";
+
 
 type CourseRowProps = {
   course: Course;
   index: number;
-  onCourseChange: (field: keyof Omit<Course, "id">, value: string) => void;
+  onCourseChange: (identifier: "name" | "units" | "gradePoint", value: string) => void;
   onRemoveCourse: () => void;
   isRemoveDisabled: boolean;
 };
@@ -16,24 +18,27 @@ const CourseRow = ({
   onRemoveCourse,
   isRemoveDisabled,
 }: CourseRowProps) => (
-  <motion.li layout='position' animate={{opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25}}}   className="flex flex-row gap-2 justify-between items-center"
+  <motion.div
+    layout="position"
+    animate={{ opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25 } }}
+    className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center"
   >
     <input
       type="text"
       placeholder={`Course ${index + 1} Name`}
-      value={course.name.toUpperCase()}
-      onChange={(e) => onCourseChange("name", e.target.value)}
-      className="w-[50%] px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-300"
+      value={course.name}
+      onChange={(e) => onCourseChange("name", e.target.value.toUpperCase())}
+      className="flex-1 px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
     />
     <input
-      type="number"
+      type="text"
       min={0}
       placeholder="Units"
       value={course.units}
       onChange={(e) => onCourseChange("units", e.target.value)}
-      className="w-[30%] max-w-[80px] px-3 py-2 flex-1 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-300"
+      className="w-20 px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
     />
-
+    <GradeSelectMenu onGradePointChange={onCourseChange} storedGradePoint={course.gradePoint} />
     <button
       type="button"
       onClick={onRemoveCourse}
@@ -41,7 +46,7 @@ const CourseRow = ({
       className={`ml-2 px-2 py-1 rounded-lg hover:text-red-500 disabled:opacity-10`}
       title="Remove Course"
     >
-       <svg
+      <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -56,7 +61,7 @@ const CourseRow = ({
         />
       </svg>
     </button>
-  </motion.li>
+  </motion.div>
 );
 
 export default CourseRow;

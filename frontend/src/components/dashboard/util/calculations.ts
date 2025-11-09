@@ -1,30 +1,14 @@
 import type { AcademicYear } from "../../../store/UserDashboardContext";
 
-type Course = { id: number; name: string; units: string; score: string };
-
-const getGradePoint = (score: number): number => {
-  if (score >= 70) return 5.0;
-  if (score >= 60) return 4.0;
-  if (score >= 50) return 3.0;
-  if (score >= 45) return 2.0;
-  if (score >= 40) return 1.0;
-  return 0.0;
-};
+type Course = { id: number; name: string; units: string; gradePoint: string | number };
 
 export const calculateGPAForCourses = (courses: Course[]): string | null => {
   let totalQualityPoints = 0,
     totalUnits = 0;
   for (const course of courses) {
-    const units = parseInt(course.units),
-      score = parseInt(course.score);
-    if (
-      !isNaN(units) &&
-      !isNaN(score) &&
-      units > 0 &&
-      score >= 0 &&
-      score <= 100
-    ) {
-      totalQualityPoints += getGradePoint(score) * units;
+    const units = parseInt(course.units)
+    if (!isNaN(units) && units > 0) {
+      totalQualityPoints += (course.gradePoint === "" ? 0 : +course.gradePoint) * units;
       totalUnits += units;
     }
   }
@@ -40,3 +24,23 @@ export const calculateFinalCGPA = (courseHistory: AcademicYear[]) => {
 
     return CGPA;
 };
+
+
+export const getSemesterData = (courseHistory: AcademicYear[]) => {
+  const semesterNames: string[] = [];
+  const cumulativeCourses: Course[][] = [];
+  let accumulatedCourses: Course[] = [];
+
+  courseHistory.forEach((level) => {
+    level.semesters.forEach((semester) => {
+      const semesterName = `${level.name} ${semester.name.split(" ").splice(0,1)}`;
+      semesterNames.push(semesterName);
+
+      accumulatedCourses = [...accumulatedCourses, ...semester.courses];
+
+      cumulativeCourses.push([...accumulatedCourses]);
+    });
+  });
+
+  return { semesterNames, cumulativeCourses };
+}

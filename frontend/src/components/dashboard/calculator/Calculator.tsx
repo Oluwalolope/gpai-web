@@ -1,48 +1,12 @@
 import { useContext, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import UserDashboardContext from "../../../store/UserDashboardContext";
-
-// --- Type Definitions ---
-type Course = { id: number; name: string; units: string; score: string };
-// type Semester = { id: number; name: string; courses: Course[] };
-// type AcademicYear = { id: number; name: string; semesters: Semester[] };
+import UserDashboardContext, { type Course } from "../../../store/UserDashboardContext";
+import CourseRow from "./CourseRow";
+import { calculateGPAForCourses } from "../util/calculations";
+import GradeScaleSelectMenu from "../settings/GradingScaleSelectMenu";
 
 // --- Reusable Helper Functions ---
-const getGradePoint = (score: number): number => {
-  if (score >= 70) return 5.0;
-  if (score >= 60) return 4.0;
-  if (score >= 50) return 3.0;
-  if (score >= 45) return 2.0;
-  if (score >= 40) return 1.0;
-  return 0.0;
-};
-const getGradeLetter = (score: number): string => {
-  if (score >= 70) return "A";
-  if (score >= 60) return "B";
-  if (score >= 50) return "C";
-  if (score >= 45) return "D";
-  if (score >= 40) return "E";
-  return "F";
-};
-const calculateGPAForCourses = (courses: Course[]): string | null => {
-  let totalQualityPoints = 0,
-    totalUnits = 0;
-  for (const course of courses) {
-    const units = parseInt(course.units),
-      score = parseInt(course.score);
-    if (
-      !isNaN(units) &&
-      !isNaN(score) &&
-      units > 0 &&
-      score >= 0 &&
-      score <= 100
-    ) {
-      totalQualityPoints += getGradePoint(score) * units;
-      totalUnits += units;
-    }
-  }
-  return totalUnits > 0 ? (totalQualityPoints / totalUnits).toFixed(2) : null;
-};
+
 const getGPAColor = (gpaValue: string) => {
   const gpaNum = parseFloat(gpaValue);
   if (gpaNum >= 4.5) return "from-emerald-500 to-green-600";
@@ -62,13 +26,6 @@ const Calculator = () => {
   const scrollToBottom = () => {
     window.scrollTo({
       top: document.body.scrollHeight,
-      behavior: "smooth", // smooth scrolling
-    });
-  };
-
-  const scrollToBottomOfCourseList = () => {
-    window.scrollBy({
-      top: listOfCoursesRef.current!.scrollHeight,
       behavior: "smooth", // smooth scrolling
     });
   };
@@ -104,22 +61,19 @@ const Calculator = () => {
   };
   const addCourseToSemester = (yearId: number, semesterId: number) => {
     userDashboardCtx.addCourseToSemester(yearId, semesterId);
-
-    // scroll to bottom of list 200ms after the user adds a new course
-    setTimeout(scrollToBottomOfCourseList, 200);
   };
   const handleCourseChange = (
     yearId: number,
     semesterId: number,
     courseId: number,
-    field: keyof Omit<Course, "id">,
+    identifier: "name" | "units" | "gradePoint",
     value: string
   ) => {
     userDashboardCtx.handleCourseChange(
       yearId,
       semesterId,
       courseId,
-      field,
+      identifier,
       value
     );
   };
@@ -172,6 +126,13 @@ const Calculator = () => {
           <div className="text-2xl font-bold text-purple-600">{totalUnits}</div>
         </div>
       </div>
+
+
+      <div className="ms-auto max-w-[120px] mb-3">
+        <GradeScaleSelectMenu />
+      </div>
+
+
 
       <motion.div
         ref={listOfAcademicSessionsRef}
@@ -238,7 +199,12 @@ const Calculator = () => {
                   open
                 >
                   <summary className="font-bold text-lg cursor-pointer text-gray-700 flex justify-between items-center">
-                    <span>{semester.name}</span>
+                    <div className="flex flex-row items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="size-4">
+                        <path fillRule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                      </svg>
+                      <span>{semester.name}</span>
+                    </div>
                     <div className="inline-flex flex-row gap-4 items-center">
                       <span className="text-sm font-medium text-slate-500">
                         SGP:{" "}
@@ -288,14 +254,14 @@ const Calculator = () => {
                         course={course}
                         index={index}
                         onCourseChange={(
-                          field: keyof Omit<Course, "id">,
+                          identifier: "name" | "units" | "gradePoint",
                           value: string
                         ) =>
                           handleCourseChange(
                             year.id,
                             semester.id,
                             course.id,
-                            field,
+                            identifier,
                             value
                           )
                         }
@@ -418,7 +384,7 @@ const Calculator = () => {
               </div>
               <div className="text-sm text-slate-500 mb-6">
                 Based on{" "}
-                {allCourses.filter((c) => c.name && c.units && c.score).length}{" "}
+                {allCourses.filter((c) => c.name && c.units).length}{" "}
                 courses • {totalUnits} total units
               </div>
             </div>
@@ -428,82 +394,5 @@ const Calculator = () => {
     </div>
   );
 };
-
-/**
- * CourseRow component for rendering a single course row in the table.
- */
-type CourseRowProps = {
-  course: Course;
-  index: number;
-  onCourseChange: (field: keyof Omit<Course, "id">, value: string) => void;
-  onRemoveCourse: () => void;
-  isRemoveDisabled: boolean;
-};
-
-const CourseRow = ({
-  course,
-  index,
-  onCourseChange,
-  onRemoveCourse,
-  isRemoveDisabled,
-}: CourseRowProps) => (
-  <motion.div
-    layout="position"
-    animate={{ opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25 } }}
-    className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center"
-  >
-    <input
-      type="text"
-      placeholder={`Course ${index + 1} Name`}
-      value={course.name}
-      onChange={(e) => onCourseChange("name", e.target.value)}
-      className="flex-1 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-300"
-    />
-    <input
-      type="number"
-      min={0}
-      placeholder="Units"
-      value={course.units}
-      onChange={(e) => onCourseChange("units", e.target.value)}
-      className="w-20 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-300"
-    />
-    <input
-      type="number"
-      min={0}
-      max={100}
-      placeholder="Score"
-      value={course.score}
-      onChange={(e) => onCourseChange("score", e.target.value)}
-      className="w-24 px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-purple-300"
-    />
-    <span className="w-10 text-center font-bold text-slate-700">
-      {course.score !== "" && !isNaN(Number(course.score))
-        ? getGradeLetter(Number(course.score))
-        : "-"}
-    </span>
-    <button
-      type="button"
-      onClick={onRemoveCourse}
-      disabled={isRemoveDisabled}
-      className={`ml-2 px-2 py-1 rounded-lg hover:text-red-500 disabled:opacity-10`}
-      title="Remove Course"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-        className="size-6"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6 18 18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
-  </motion.div>
-);
 
 export default Calculator;

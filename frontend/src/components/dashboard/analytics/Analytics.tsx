@@ -1,8 +1,12 @@
 import LineGraph from "./graph/LineGraph";
 import HeaderDashboard from "../UI/HeaderDashboard";
 import SidebarNavigation from "../UI/SidebarNavigation";
+import { useContext } from "react";
+import UserDashboardContext from "../../../store/UserDashboardContext";
+import SessionAnalytics from "./components/SessionAnalytics";
 
 const Analytics = () => {
+    const userDashboardCtx = useContext(UserDashboardContext);
       return (
         <div className="min-h-dvh bg-slate-50 overflow-x-hidden pb-16 md:pb-0  md:flex md:flex-col">
           <HeaderDashboard />
@@ -23,32 +27,9 @@ const Analytics = () => {
                     {/* SGPA Caurosel */}
                     <h2 className="text-2xl font-bold font-poppins text-dark-text py-3 uppercase">sgpa</h2>
 
+
                     <div className="flex flex-wrap gap-2 mt-8 mb-5">
-
-                        <div className="border border-neutral-200 shadow-sm p-6 rounded-md w-full max-w-[300px]">
-                            <h3>100L</h3>
-                            <p>1st Semester: SGPA 4.20</p>
-                            <p>2nd Semester: SGPA 3.95</p>
-                        </div>
-
-                        <div className="border border-neutral-200 shadow-sm p-6 rounded-md w-full max-w-[300px]">
-                            <h3>200L</h3>
-                            <p>1st Semester: SGPA 4.10</p>
-                            <p>2nd Semester: SGPA 3.45</p>
-                        </div>
-
-                        <div className="border border-neutral-200 shadow-sm p-6 rounded-md w-full max-w-[300px]">
-                            <h3>300L</h3>
-                            <p>1st Semester: SGPA 5.00</p>
-                            <p>2nd Semester: SGPA 4.85</p>
-                        </div>
-
-                        <div className="border border-neutral-200 shadow-sm p-6 rounded-md w-full max-w-[300px]">
-                            <h3>400L</h3>
-                            <p>1st Semester: SGPA 4.70</p>
-                            <p>2nd Semester: SGPA 4.65</p>
-                        </div>
-
+                        {userDashboardCtx.courseHistory.map((session) => <SessionAnalytics key={session.id} {...session} />)}
                     </div>
                 </article>
             </section>

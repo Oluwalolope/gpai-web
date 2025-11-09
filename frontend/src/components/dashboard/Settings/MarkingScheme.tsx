@@ -2,6 +2,10 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import GradeRow from "./GradeRow";
 
+
+// IF WE DECIDE TO ALLOW USERS TO INPUT SCORES TO AUTO GENERATE GRADES, THEN THIS IS THE COMPONENT TO WORK ON
+
+
 type Grade = { 
     id: number;
     name: string; 

@@ -12,14 +12,12 @@ const GPASnapshotCard = () => {
                 <div>
                     <h3 className="text-xl font-poppins text-slate-400">Current GPA</h3>
                     <p className="text-5xl font-bold font-poppins text-dark-text py-3">{calculatedCGPA? calculatedCGPA : 'N/A'}</p>
-                    <p className="text-xl font-poppins text-slate-400">Semester</p>
                 </div>
 
                 {userDashboardCtx.targetCGPA && 
                     <div>
                         <h3 className="text-xl font-poppins text-slate-400">Target</h3>
                         <p className="text-5xl font-bold font-poppins text-dark-text py-3">{userDashboardCtx.targetCGPA}</p>
-                        <p className="text-xl font-poppins text-slate-400">August '25</p>
                     </div> 
                 }
             </div>

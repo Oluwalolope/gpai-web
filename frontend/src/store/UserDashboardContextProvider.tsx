@@ -1,7 +1,9 @@
+// This is the one source of truth for managing state in the user dashboard
+
 import { useState } from "react";
+import { toWordsOrdinal } from "number-to-words";
 import type {
   AcademicYear,
-  Course,
   Semester,
   UserDashboard,
 } from "./UserDashboardContext";
@@ -15,23 +17,27 @@ let storedCourseHistory = [
       {
         id: 1,
         name: "First Semester",
-        courses: [{ id: 1, name: "", units: "", score: "" }],
+        courses: [{ id: 1, name: "", units: "", gradePoint: "" }],
       },
     ],
   },
 ];
 
-
 if (localStorage.getItem("courseHistory")) {
-    storedCourseHistory = JSON.parse(localStorage.getItem("courseHistory")!);
-};
-
+  storedCourseHistory = JSON.parse(localStorage.getItem("courseHistory")!);
+}
 
 let storedTargetCGPA = null;
 
 if (localStorage.getItem("targetCGPA")) {
-    storedTargetCGPA = JSON.parse(localStorage.getItem("targetCGPA")!);
-};
+  storedTargetCGPA = JSON.parse(localStorage.getItem("targetCGPA")!);
+}
+
+let storedGradeScale = "fivePoint";
+
+if (localStorage.getItem("gradeScale")) {
+  storedGradeScale = JSON.parse(localStorage.getItem("gradeScale")!);
+}
 
 const UserDashboardContextProvider = ({
   children,
@@ -40,8 +46,11 @@ const UserDashboardContextProvider = ({
 }) => {
   const [courseHistory, setCourseHistory] =
     useState<AcademicYear[]>(storedCourseHistory);
-    
-    const [targetCGPA, setTargetCGPA] = useState<number| string | null>(storedTargetCGPA);
+
+  const [targetCGPA, setTargetCGPA] = useState<number | string | null>(
+    storedTargetCGPA
+  );
+  const [gradeScale, setGradeScale] = useState<string>(storedGradeScale);
 
   const addAcademicYear = () => {
     setCourseHistory((prevCourseHistory) => {
@@ -54,7 +63,7 @@ const UserDashboardContextProvider = ({
             {
               id: Date.now(),
               name: "First Semester",
-              courses: [{ id: 1, name: "", units: "", score: "" }],
+              courses: [{ id: 1, name: "", units: "", gradePoint: "" }],
             },
           ],
         },
@@ -69,7 +78,7 @@ const UserDashboardContextProvider = ({
 
   const removeAcademicYear = (yearId: number) => {
     setCourseHistory((prevCourseHistory) => {
-      const newHistory = prevCourseHistory.filter(year => year.id !== yearId);
+      const newHistory = prevCourseHistory.filter((year) => year.id !== yearId);
 
       // Save to localStorage
       localStorage.setItem("courseHistory", JSON.stringify(newHistory));
@@ -88,8 +97,17 @@ const UserDashboardContextProvider = ({
                 ...year.semesters,
                 {
                   id: Date.now(),
-                  name: `Semester ${year.semesters.length + 1}`,
-                  courses: [{ id: 1, name: "", units: "", score: "" }],
+
+                  // Instead of semester 2, I changed the code to show Second semester using an external number-to-words libary, then I made it so that the first letter is capitalized
+                  name: `${
+                    toWordsOrdinal(year.semesters.length + 1)
+                      .charAt(0)
+                      .toLocaleUpperCase() +
+                    toWordsOrdinal(year.semesters.length + 1)
+                      .slice(1)
+                      .toLocaleLowerCase()
+                  } Semester`,
+                  courses: [{ id: 1, name: "", units: "", gradePoint: "" }],
                 },
               ],
             }
@@ -103,38 +121,44 @@ const UserDashboardContextProvider = ({
     });
   };
 
-  const removeSemesterFromAcademicYear = (yearId: number, semesterId: number) => {
+  const removeSemesterFromAcademicYear = (
+    yearId: number,
+    semesterId: number
+  ) => {
     setCourseHistory((prevCourseHistory) => {
       const newHistory: AcademicYear[] = [];
 
-      prevCourseHistory.forEach(year => {
+      prevCourseHistory.forEach((year) => {
         if (year.id !== yearId) {
-            newHistory.push(year);
+          newHistory.push(year);
         }
 
         if (year.id === yearId) {
-            const updatedSemester = year.semesters.filter(semester => semester.id !== semesterId);
+          const updatedSemester = year.semesters.filter(
+            (semester) => semester.id !== semesterId
+          );
 
-            newHistory.push({
-                id: year.id,
-                name: year.name,
-                semesters: updatedSemester
-            });
+          newHistory.push({
+            id: year.id,
+            name: year.name,
+            semesters: updatedSemester,
+          });
         }
       });
 
-      const yearIndex = prevCourseHistory.findIndex(year => year.id === yearId);
+      const yearIndex = prevCourseHistory.findIndex(
+        (year) => year.id === yearId
+      );
 
-      
       // if only one semester is in the academic year, remove the entire year
 
       if (prevCourseHistory[yearIndex].semesters.length === 1) {
-          removeAcademicYear(yearId);
+        removeAcademicYear(yearId);
       }
 
       // Save to localStorage
       localStorage.setItem("courseHistory", JSON.stringify(newHistory));
-      
+
       return newHistory;
     });
   };
@@ -151,7 +175,7 @@ const UserDashboardContextProvider = ({
                       ...semester,
                       courses: [
                         ...semester.courses,
-                        { id: Date.now(), name: "", units: "", score: "" },
+                        { id: Date.now(), name: "", units: "", gradePoint: "" },
                       ],
                     }
                   : semester
@@ -166,55 +190,66 @@ const UserDashboardContextProvider = ({
     });
   };
 
-  const removeCourseFromSemester = (yearId: number, semesterId: number, courseId: number) => {
+  const removeCourseFromSemester = (
+    yearId: number,
+    semesterId: number,
+    courseId: number
+  ) => {
     setCourseHistory((prevCourseHistory) => {
       const newHistory: AcademicYear[] = [];
 
-      prevCourseHistory.forEach(year => {
+      prevCourseHistory.forEach((year) => {
         if (year.id !== yearId) {
-            newHistory.push(year);
+          newHistory.push(year);
         }
 
         if (year.id === yearId) {
-            const updatedSemester: Semester[] = [];
+          const updatedSemester: Semester[] = [];
 
-            year.semesters.forEach(semester => {
-                if (semester.id !== semesterId) {
-                    updatedSemester.push(semester);
-                };
+          year.semesters.forEach((semester) => {
+            if (semester.id !== semesterId) {
+              updatedSemester.push(semester);
+            }
 
-                if (semester.id === semesterId) {
-                    const updatedCourses = semester.courses.filter(course => course.id !== courseId);
+            if (semester.id === semesterId) {
+              const updatedCourses = semester.courses.filter(
+                (course) => course.id !== courseId
+              );
 
-                    updatedSemester.push({
-                        id: semester.id,
-                        name: semester.name,
-                        courses: updatedCourses
-                    });
-                };
-            });
+              updatedSemester.push({
+                id: semester.id,
+                name: semester.name,
+                courses: updatedCourses,
+              });
+            }
+          });
 
-
-            newHistory.push({
-                id: year.id,
-                name: year.name,
-                semesters: updatedSemester
-            });
+          newHistory.push({
+            id: year.id,
+            name: year.name,
+            semesters: updatedSemester,
+          });
         }
       });
 
-      const yearIndex = prevCourseHistory.findIndex(year => year.id === yearId);
-      const semesterIndex = prevCourseHistory[yearIndex].semesters.findIndex(semester => semester.id === semesterId);
+      const yearIndex = prevCourseHistory.findIndex(
+        (year) => year.id === yearId
+      );
+      const semesterIndex = prevCourseHistory[yearIndex].semesters.findIndex(
+        (semester) => semester.id === semesterId
+      );
 
-      
       // if only one course is in the semester, remove the entire semester
-      if (prevCourseHistory[yearIndex].semesters[semesterIndex].courses.length === 1) {
+      if (
+        prevCourseHistory[yearIndex].semesters[semesterIndex].courses.length ===
+        1
+      ) {
         removeSemesterFromAcademicYear(yearId, semesterId);
       }
 
       // Save to localStorage
       localStorage.setItem("courseHistory", JSON.stringify(newHistory));
-      
+
       return newHistory;
     });
   };
@@ -236,27 +271,33 @@ const UserDashboardContextProvider = ({
       return newHistory;
     });
   };
-  
+
   const handleCourseChange = (
-      yearId: number,
+    yearId: number,
     semesterId: number,
     courseId: number,
-    field: keyof Omit<Course, "id">,
+    identifier: string,
     value: string
   ) => {
     setCourseHistory((prevCourseHistory) => {
-        
-        const newHistory = prevCourseHistory.map((year) =>
-            year.id === yearId
-        ? {
-            ...year,
-            semesters: year.semesters.map((semester) =>
+      console.log(identifier);
+      const newHistory = prevCourseHistory.map((year) =>
+        year.id === yearId
+          ? {
+              ...year,
+              semesters: year.semesters.map((semester) =>
                 semester.id === semesterId
-            ? {
-                ...semester,
-                courses: semester.courses.map((course) =>
-                    course.id === courseId
-                ? { ...course, [field]: value }
+                  ? {
+                      ...semester,
+                      courses: semester.courses.map((course) =>
+                        course.id === courseId
+                          ? {
+                              ...course,
+                              [identifier]:
+                                identifier === "units"
+                                  ? value.replace(/\D/g, "")
+                                  : value,
+                            } // remove all non-digit characters in the unit field only
                           : course
                       ),
                     }
@@ -264,17 +305,22 @@ const UserDashboardContextProvider = ({
               ),
             }
           : year
-      )
+      );
 
-        // Save to localStorage
-        localStorage.setItem("courseHistory", JSON.stringify(newHistory));
+      // Save to localStorage
+      localStorage.setItem("courseHistory", JSON.stringify(newHistory));
 
-        return newHistory;
+      return newHistory;
     });
-    
-};
+  };
 
-const handleTargetCGPAChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTargetCGPAChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let max = "5.00";
+
+    if (gradeScale == "fourPoint") {
+      max = "4.00";
+    }
+
     // Remove all non-digit characters
     let value = e.target.value.replace(/\D/g, "");
 
@@ -288,14 +334,45 @@ const handleTargetCGPAChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       value = value.slice(0, 1) + "." + value.slice(1);
     }
 
-    localStorage.setItem('targetCGPA', JSON.stringify(value))
-  setTargetCGPA(value);
-};
+    // The target can not be more than the scale. For instance, if you are on a 4.0 scale, your target can not be 5.0
+    if (parseFloat(value) > parseFloat(max)) {
+      value = max;
+    }
+
+    localStorage.setItem("targetCGPA", JSON.stringify(value));
+    setTargetCGPA(value);
+  };
+
+  const handleGradeScaleChange = (grade: string) => {
+    let max = "";
+
+    if (grade == "fourPoint") {
+      max = "4.00";
+    }
+    if (grade == "fivePoint") {
+      max = "5.00";
+    }
+
+    let value = targetCGPA;
+
+    // The target can not be more than the scale. For instance, if you are on a 4.0 scale, your target can not be 5.0
+    if (parseFloat(value!.toString()) > parseFloat(max)) {
+      value = max;
+    }
+
+    localStorage.setItem("targetCGPA", JSON.stringify(value));
+    setTargetCGPA(value);
+
+    localStorage.setItem("targetCGPA", JSON.stringify(grade));
+    setGradeScale(grade);
+  };
 
   const UserDashboardContextValue: UserDashboard = {
     courseHistory,
     targetCGPA,
+    gradeScale,
     handleTargetCGPAChange,
+    handleGradeScaleChange,
     addAcademicYear,
     removeAcademicYear,
     addSemesterToAcademicYear,

@@ -1,3 +1,5 @@
+import LanguageSelectMenu from "./LanguageSelectMenu";
+
 const UserPreference = () => {
     return (
         <section className="rounded-xl border shadow-sm md:shadow-lg border-neutral-200 bg-white px-4 py-6">
@@ -25,9 +27,7 @@ const UserPreference = () => {
             {/* Language */}
             <div className="flex flex-col pt-2 gap-2">
                 <p className="font-poppins text-dark-text">Language</p>
-                <select name="language" id="language" className="cursor-pointer px-3 py-2 flex-1 rounded-lg border border-slate-300 focus:ring-2 focus:ring-primary">
-                    <option value="English">English</option>
-                </select>
+                <LanguageSelectMenu />
             </div>
 
         </section>
