@@ -1,31 +1,24 @@
-import { useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import CourseRow from "./CourseRow";
 import { motion } from "framer-motion";
+import UserDashboardContext from "../../../store/UserDashboardContext";
 
 type Course = { id: number; name: string; units: string };
 
 type prop = {
-  handleForecast: () => void
+  handleForecast: () => void;
 }
 
 const RemainingCourses = ({handleForecast}:prop) => {
   const remainingCourseListRef = useRef<HTMLUListElement>(null);
-  const [remainingCourses, setRemainingCourses] = useState<Course[]>([
-    { id: 1, name: "", units: "" },
-  ]);
+  const userDashboardCtx = useContext(UserDashboardContext);
 
   const handleCourseChange = (
     id: number,
     field: keyof Omit<Course, "id">,
     value: string
   ) => {
-    setRemainingCourses((prevRemainingCourses) => {
-      const courseList = prevRemainingCourses;
-      const updatedCourseList = courseList.map((course) =>
-        course.id === id ? { ...course, [field]: value } : course
-      );
-      return updatedCourseList;
-    });
+    userDashboardCtx.handleRemainingCourseChange(id, field, value);
   };
 
   const scrollToBottomOfCourseList = () => {
@@ -36,21 +29,14 @@ const RemainingCourses = ({handleForecast}:prop) => {
   };
 
   const addCourse = () => {
-    setRemainingCourses((prevRemainingCourses) => [
-      ...prevRemainingCourses,
-      { id: Date.now(), name: "", units: "" },
-    ]);
+    userDashboardCtx.addCourseToRemainingCourses();
 
     // scroll to bottom of list 100ms after the user adds a new course
     setTimeout(scrollToBottomOfCourseList, 100);
   };
 
   const removeCourse = (id: number) => {
-    setRemainingCourses((prevRemainingCourses) => {
-      const courseList = prevRemainingCourses;
-      const updatedCourseList = courseList.filter((course) => course.id !== id);
-      return updatedCourseList;
-    });
+    userDashboardCtx.removeCourseFromRemainingCourses(id);
   };
 
 
@@ -62,7 +48,7 @@ const RemainingCourses = ({handleForecast}:prop) => {
 
       <form className="pt-4 border-t border-slate-200 h-[90%] flex flex-col justify-between">
         <motion.ul ref={remainingCourseListRef}  className="overflow-y-auto overflow-x-hidden space-y-4 max-h-[100px] mb-3 scroll-smooth list-none">
-          {remainingCourses.map((course: Course, index: number) => (
+          {userDashboardCtx.remainingCourses.map((course: Course, index: number) => (
             <CourseRow
               key={course.id}
               course={course}
@@ -74,7 +60,7 @@ const RemainingCourses = ({handleForecast}:prop) => {
               onRemoveCourse={() => {
                 removeCourse(course.id);
               }}
-              isRemoveDisabled={remainingCourses.length === 1}
+              isRemoveDisabled={userDashboardCtx.remainingCourses.length === 1}
             />
           ))}
         </motion.ul>

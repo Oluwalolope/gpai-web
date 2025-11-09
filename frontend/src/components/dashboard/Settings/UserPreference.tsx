@@ -7,7 +7,8 @@ const UserPreference = () => {
 
             {/* Theme */}
             <div className="flex flex-col gap-4  pb-2">
-                <h3 className="font-poppins">Theme</h3>
+                {/* Implement the light - dark mode  functionality */}
+                {/* <h3 className="font-poppins">Theme</h3>
                 <div className="flex gap-3 flex-wrap">
                     <label className="cursor-pointer">
                         <input type="radio" name="theme" id="theme" value="light" className="me-2" />
@@ -21,7 +22,7 @@ const UserPreference = () => {
                         <input type="radio" name="theme" id="theme" value="system" className="me-2" />
                         System Default
                     </label>
-                </div>
+                </div> */}
             </div>
 
             {/* Language */}

@@ -3,19 +3,32 @@ import ScenarioSlider from "./ScenarioSlider";
 
 type prop = {
   forecastedAverageGrade: string;
+  forecastedGPA: number;
+  handleForecastedCGPAChange: (value: number) => void;
+  remark: string;
 };
 
-const forecastedGPA = 4.32; // This value can be dynamically calculated based on the slider input in the future
-
-const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
+const ForecasterOutput = ({
+  forecastedAverageGrade,
+  remark,
+  forecastedGPA,
+  handleForecastedCGPAChange,
+}: prop) => {
   return (
-    <motion.div animate={{opacity: [0, 0.5 ,1], scale: [0.8, 0.85, 0.9, 0.95, 1], transitionDuration: 300}} className="flex-1 px-10 py-5">
-      <h2 className="text-xl font-medium font-poppins text-center md:text-start capitalize">
+    <motion.div
+      animate={{
+        opacity: [0, 0.5, 1],
+        scale: [0.8, 0.85, 0.9, 0.95, 1],
+        transitionDuration: 300,
+      }}
+      className="flex-1 px-10 py-5"
+    >
+      <h2 className="text-xl font-medium font-poppins text-center lg:text-start capitalize">
         minimum average grade needed
       </h2>
 
-      <div className="size-[180px] grid place-items-center mx-auto rounded-full conic-gradient my-5">
-        <div className="bg-neutral-700 rounded-full size-[160px] grid place-items-center mx-auto">
+      <div className="size-[150px] grid place-items-center mx-auto rounded-full conic-gradient my-5">
+        <div className="bg-neutral-700 rounded-full size-[130px] grid place-items-center mx-auto">
           <div>
             <p className="text-white text-5xl font-inter font-bold text-center pb-2">
               {forecastedAverageGrade}
@@ -33,10 +46,12 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
         </h3>
 
         {/* Output the AI remark here */}
-        <p className="text-sm font-normal font-inter overflow-y-auto max-h-[75px]">
-          Based on your remaining courses, you need a minimum grade of 'A' in
-          each course to reach your target GPA of 4.5
-        </p>
+        <p
+          className="text-sm font-normal font-inter overflow-y-auto max-h-[75px]"
+          dangerouslySetInnerHTML={{
+            __html: remark.replaceAll("/n", "<br /> <br />"),
+          }}
+        ></p>
       </div>
 
       <div>
@@ -49,14 +64,18 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
         </p>
 
         <div>
-          <ScenarioSlider />
-          <div className="flex flex-col gap-y-3 md:flex-row justify-between items-center">
-            <p className="text-[16px] font-normal font-inter mt-2 text-stone-600">
-              This gets you to{" "}
-              <span className="font-bold">{forecastedGPA}</span> CGPA!
-            </p>
+          <ScenarioSlider
+            handleForecastedCGPAChange={handleForecastedCGPAChange}
+          />
+          <div className="flex flex-col gap-y-3 lg:flex-row justify-between items-center">
+              <p className="text-[16px] font-normal font-inter mt-2 text-stone-600">
+                This gets you to a {" "}
+                <span className="font-bold">{forecastedGPA}</span> CGPA!
+              </p>
 
-            <motion.button
+            {/* This is the button to share the result for the viral loop feature */}
+
+            {/* <motion.button
               type="button"
               transition={{ type: "spring", stiffness: 500 }}
               whileHover={{ scale: 1.05 }}
@@ -80,7 +99,7 @@ const ForecasterOutput = ({ forecastedAverageGrade }: prop) => {
                 </svg>
                 Share
               </span>
-            </motion.button>
+            </motion.button> */}
           </div>
         </div>
       </div>

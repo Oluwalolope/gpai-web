@@ -20,6 +20,7 @@
     "@supabase/supabase-js": "^2.54.0",
     "chart.js": "^4.5.0",
     "framer-motion": "^12.23.24",
+    "javascript-lp-solver": "^0.4.24",
     "number-to-words": "^1.2.4",
     "openai": "^5.9.2",
     "react": "^19.1.0",

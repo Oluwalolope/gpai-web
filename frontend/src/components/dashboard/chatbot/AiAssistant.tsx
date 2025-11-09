@@ -13,13 +13,13 @@ const AiAssistant = () => {
   };
 
   return (
-    <div className="min-h-dvh bg-slate-50 overflow-x-hidden pb-16 md:pb-0  md:flex md:flex-col">
+    <div className="min-h-dvh bg-slate-50 overflow-x-hidden pb-16 lg:pb-0  lg:flex lg:flex-col">
       <HeaderDashboard />
 
-      <main className="container mx-auto max-w-7xl min-h-dvh px-4 md:px-0 md:grid md:grid-cols-5 md:grid-rows-2 md:gap-4 md:flex-1">
+      <main className="container mx-auto max-w-7xl min-h-dvh px-4 lg:px-0 lg:grid lg:grid-cols-5 lg:grid-rows-2 lg:gap-4 lg:flex-1">
         <SidebarNavigation />
         
-        <section className={'col-span-4 row-span-2 bg-white/80 backdrop-blur-xl rounded-3xl h-full md:h-[95dvh] mt-4 p-4 sm:p-8 shadow-2xl shadow-purple-500/10 border border-white/50'}>
+        <section className={'col-span-4 row-span-2 bg-white/80 backdrop-blur-xl rounded-3xl h-full lg:h-[95dvh] mt-4 p-4 sm:p-8 shadow-2xl shadow-purple-500/10 border border-white/50'}>
            <AnimatePresence>
               { hasChatStarted && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 1.5 } }} exit={{ opacity: 0 }}>

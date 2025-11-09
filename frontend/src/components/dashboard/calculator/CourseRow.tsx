@@ -21,14 +21,14 @@ const CourseRow = ({
   <motion.div
     layout="position"
     animate={{ opacity: [0, 1], y: [-5, 0], transition: { duration: 0.25 } }}
-    className="flex flex-col sm:flex-row gap-2 sm:gap-4 items-center"
+    className="flex flex-row justify-between items-center gap-2"
   >
     <input
       type="text"
       placeholder={`Course ${index + 1} Name`}
       value={course.name}
       onChange={(e) => onCourseChange("name", e.target.value.toUpperCase())}
-      className="flex-1 px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
+      className="w-[50%] px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
     />
     <input
       type="text"
@@ -36,14 +36,14 @@ const CourseRow = ({
       placeholder="Units"
       value={course.units}
       onChange={(e) => onCourseChange("units", e.target.value)}
-      className="w-20 px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
+      className="w-[10%] min-w-[35px] px-3 py-2 rounded-[4px] border outline-transparent border-[#0000003f] hover:border-[#000] focus-within:border-2 focus-within:border-[#3b82f6]"
     />
     <GradeSelectMenu onGradePointChange={onCourseChange} storedGradePoint={course.gradePoint} />
     <button
       type="button"
       onClick={onRemoveCourse}
       disabled={isRemoveDisabled}
-      className={`ml-2 px-2 py-1 rounded-lg hover:text-red-500 disabled:opacity-10`}
+      className={`px-1 lg:px-2 py-1 rounded-lg hover:text-red-500 disabled:opacity-10`}
       title="Remove Course"
     >
       <svg

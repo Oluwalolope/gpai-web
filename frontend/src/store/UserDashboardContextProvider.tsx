@@ -4,10 +4,19 @@ import { useState } from "react";
 import { toWordsOrdinal } from "number-to-words";
 import type {
   AcademicYear,
+  RemainingCourse,
   Semester,
   UserDashboard,
 } from "./UserDashboardContext";
 import UserDashboardContext from "./UserDashboardContext";
+
+let storedRemainingCourses = [{ id: 1, name: "", units: "" }];
+
+if (localStorage.getItem("remainingCourses")) {
+  storedRemainingCourses = JSON.parse(
+    localStorage.getItem("remainingCourses")!
+  );
+}
 
 let storedCourseHistory = [
   {
@@ -46,6 +55,10 @@ const UserDashboardContextProvider = ({
 }) => {
   const [courseHistory, setCourseHistory] =
     useState<AcademicYear[]>(storedCourseHistory);
+
+  const [remainingCourses, setRemainingCourses] = useState<RemainingCourse[]>(
+    storedRemainingCourses
+  );
 
   const [targetCGPA, setTargetCGPA] = useState<number | string | null>(
     storedTargetCGPA
@@ -254,6 +267,37 @@ const UserDashboardContextProvider = ({
     });
   };
 
+  const addCourseToRemainingCourses = () => {
+    setRemainingCourses((prevRemainingCourses) => {
+      const newRemainingCourses = [...prevRemainingCourses];
+      newRemainingCourses.push({ id: Date.now(), name: "", units: "" });
+
+      // Save to localStorage
+      localStorage.setItem(
+        "remainingCourses",
+        JSON.stringify(newRemainingCourses)
+      );
+
+      return newRemainingCourses;
+    });
+  };
+
+  const removeCourseFromRemainingCourses = (courseId: number) => {
+    setRemainingCourses((prevRemainingCourses) => {
+      const newRemainingCourses = prevRemainingCourses.filter(
+        (course) => course.id !== courseId
+      );
+
+      // Save to localStorage
+      localStorage.setItem(
+        "remainingCourses",
+        JSON.stringify(newRemainingCourses)
+      );
+
+      return newRemainingCourses;
+    });
+  };
+
   const handleAcademicYearChange = (
     year: AcademicYear,
     e: React.ChangeEvent<HTMLInputElement>
@@ -280,7 +324,6 @@ const UserDashboardContextProvider = ({
     value: string
   ) => {
     setCourseHistory((prevCourseHistory) => {
-      console.log(identifier);
       const newHistory = prevCourseHistory.map((year) =>
         year.id === yearId
           ? {
@@ -311,6 +354,31 @@ const UserDashboardContextProvider = ({
       localStorage.setItem("courseHistory", JSON.stringify(newHistory));
 
       return newHistory;
+    });
+  };
+  const handleRemainingCourseChange = (
+    courseId: number,
+    identifier: string,
+    value: string
+  ) => {
+    setRemainingCourses((prevRemainingCourses) => {
+      const newRemainingCourses = prevRemainingCourses.map((course) =>
+        course.id === courseId
+          ? {
+              ...course,
+              [identifier]:
+                identifier === "units" ? value.replace(/\D/g, "") : value,
+            } // remove all non-digit characters in the unit field only
+          : course
+      );
+
+      // Save to localStorage
+      localStorage.setItem(
+        "remainingCourses",
+        JSON.stringify(newRemainingCourses)
+      );
+
+      return newRemainingCourses;
     });
   };
 
@@ -369,6 +437,7 @@ const UserDashboardContextProvider = ({
 
   const UserDashboardContextValue: UserDashboard = {
     courseHistory,
+    remainingCourses,
     targetCGPA,
     gradeScale,
     handleTargetCGPAChange,
@@ -378,9 +447,12 @@ const UserDashboardContextProvider = ({
     addSemesterToAcademicYear,
     removeSemesterFromAcademicYear,
     addCourseToSemester,
+    addCourseToRemainingCourses,
     removeCourseFromSemester,
+    removeCourseFromRemainingCourses,
     handleAcademicYearChange,
     handleCourseChange,
+    handleRemainingCourseChange,
   };
 
   return (

@@ -9,13 +9,13 @@ import HeaderDashboard from "../components/dashboard/UI/HeaderDashboard";
 
 const UserDashboardPage = () => {
   return (
-    <div className="min-h-dvh bg-slate-50  pb-16 md:pb-0  md:flex md:flex-col">
+    <div className="min-h-dvh bg-slate-50  pb-16 md:pb-0  lg:flex lg:flex-col">
       <HeaderDashboard />
 
-      <main className="mx-auto min-h-dvh max-w-7xl px-4 md:px-0 md:grid md:grid-cols-5 md:grid-rows-2 md:gap-4 md:flex-1">
+      <main className="mx-auto min-h-dvh max-w-7xl px-4 lg:px-0 lg:grid lg:grid-cols-5 lg:grid-rows-2 lg:gap-4 lg:flex-1">
         <SidebarNavigation />
 
-        <section className={'md:col-span-4 md:row-span-2 flex flex-col py-4 md:grid gap-2 md:grid-cols-2 md:grid-rows-2 md:pe-4 md:py-8'}>
+        <section className={'lg:col-span-4 lg:row-span-2 flex flex-col py-4 lg:grid gap-2 lg:grid-cols-2 lg:grid-rows-2 lg:pe-4 lg:py-8'}>
           <GPASnapshotCard />
           <AiAssistantCard />
           <GPAAnalyticsCard />

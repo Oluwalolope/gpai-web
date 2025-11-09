@@ -11,8 +11,6 @@ const GradeScaleSelectMenu = () => {
   const [gradeScale, setGradeScale] = useState('fivePoint');
   const userDashboardCtx = useContext(UserDashboardContext);
 
-  console.log(userDashboardCtx.gradeScale);
-
   const handleChange = (event: SelectChangeEvent) => {
     setGradeScale(event.target.value);
     userDashboardCtx.handleGradeScaleChange(event.target.value);

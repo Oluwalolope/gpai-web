@@ -4,6 +4,7 @@ import Select from "@mui/material/Select";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import { useContext, useState } from "react";
 import UserDashboardContext from "../../../store/UserDashboardContext";
+import { gradeScale } from "../util/constants";
 
 type props = {
   storedGradePoint: string;
@@ -27,30 +28,12 @@ const GradeSelectMenu = ({ storedGradePoint, onGradePointChange }: props) => {
     setGradePoint(event.target.value);
   };
 
-  const gradeScale = {
-    fourPoint: [
-      { value: 4, letter: "A" },
-      { value: 3, letter: "B" },
-      { value: 2, letter: "C" },
-      { value: 1, letter: "D" },
-      { value: 0, letter: "E" },
-    ],
-    fivePoint: [
-      { value: 5, letter: "A" },
-      { value: 4, letter: "B" },
-      { value: 3, letter: "C" },
-      { value: 2, letter: "D" },
-      { value: 1, letter: "E" },
-      { value: 0, letter: "F" },
-    ],
-  };
-
   const chosenScale: string = userDashboardCtx.gradeScale!.toString();
   const scale: grade[] = gradeScale[chosenScale];
 
   return (
     <div>
-      <FormControl sx={{ m: 1, minWidth: 50 }} size="small">
+      <FormControl sx={{ minWidth: 30, maxWidth: 60 }} size="small">
         <Select
           value={gradePoint}
           onChange={handleChange}
