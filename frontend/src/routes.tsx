@@ -12,7 +12,7 @@ import GPACalculator from "./components/dashboard/calculator/GPACalculator";
 import Forecaster from "./components/dashboard/forecaster/Forecaster";
 import AiAssistant from "./components/dashboard/chatbot/AiAssistant";
 import Analytics from "./components/dashboard/analytics/Analytics";
-import UserSettings from "./components/dashboard/settings/UserSettings";
+import UserSettings from "./components/dashboard/settings/UserSettings.tsx";
 
 const router = createBrowserRouter([
   {
