@@ -36,7 +36,7 @@ if (localStorage.getItem("courseHistory")) {
   storedCourseHistory = JSON.parse(localStorage.getItem("courseHistory")!);
 }
 
-let storedTargetCGPA = null;
+let storedTargetCGPA = 3.00;
 
 if (localStorage.getItem("targetCGPA")) {
   storedTargetCGPA = JSON.parse(localStorage.getItem("targetCGPA")!);

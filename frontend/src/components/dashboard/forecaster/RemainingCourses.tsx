@@ -7,9 +7,9 @@ type Course = { id: number; name: string; units: string };
 
 type prop = {
   handleForecast: () => void;
-}
+};
 
-const RemainingCourses = ({handleForecast}:prop) => {
+const RemainingCourses = ({ handleForecast }: prop) => {
   const remainingCourseListRef = useRef<HTMLUListElement>(null);
   const userDashboardCtx = useContext(UserDashboardContext);
 
@@ -39,7 +39,6 @@ const RemainingCourses = ({handleForecast}:prop) => {
     userDashboardCtx.removeCourseFromRemainingCourses(id);
   };
 
-
   return (
     <div className="mt-6 h-[60%] flex flex-col gap-y-2">
       <h2 className="text-lg font-medium font-poppins capitalize h-[10%]">
@@ -47,22 +46,29 @@ const RemainingCourses = ({handleForecast}:prop) => {
       </h2>
 
       <form className="pt-4 border-t border-slate-200 h-[90%] flex flex-col justify-between">
-        <motion.ul ref={remainingCourseListRef}  className="overflow-y-auto overflow-x-hidden space-y-4 max-h-[100px] mb-3 scroll-smooth list-none">
-          {userDashboardCtx.remainingCourses.map((course: Course, index: number) => (
-            <CourseRow
-              key={course.id}
-              course={course}
-              index={index}
-              onCourseChange={(
-                field: keyof Omit<Course, "id">,
-                value: string
-              ) => handleCourseChange(course.id, field, value)}
-              onRemoveCourse={() => {
-                removeCourse(course.id);
-              }}
-              isRemoveDisabled={userDashboardCtx.remainingCourses.length === 1}
-            />
-          ))}
+        <motion.ul
+          ref={remainingCourseListRef}
+          className="overflow-y-auto overflow-x-hidden space-y-4 max-h-[100px] mb-3 scroll-smooth list-none"
+        >
+          {userDashboardCtx.remainingCourses.map(
+            (course: Course, index: number) => (
+              <CourseRow
+                key={course.id}
+                course={course}
+                index={index}
+                onCourseChange={(
+                  field: keyof Omit<Course, "id">,
+                  value: string
+                ) => handleCourseChange(course.id, field, value)}
+                onRemoveCourse={() => {
+                  removeCourse(course.id);
+                }}
+                isRemoveDisabled={
+                  userDashboardCtx.remainingCourses.length === 1
+                }
+              />
+            )
+          )}
         </motion.ul>
         <button
           type="button"
@@ -73,6 +79,12 @@ const RemainingCourses = ({handleForecast}:prop) => {
         </button>
 
         <motion.button
+          disabled={
+            userDashboardCtx.courseHistory[0].semesters[0].courses[0].units.trim() ===
+              "" ||
+            userDashboardCtx.courseHistory[0].semesters[0].courses[0].gradePoint.trim() ===
+              ""
+          }
           type="button"
           transition={{ type: "spring", stiffness: 500 }}
           whileHover={{ scale: 1.05 }}
