@@ -4,6 +4,8 @@ import UserPreference from "./UserPreference";
 import HeaderDashboard from "../UI/HeaderDashboard";
 import SidebarNavigation from "../UI/SidebarNavigation";
 
+// This is the settings file
+
 const UserSettings = () => {
   
   return (

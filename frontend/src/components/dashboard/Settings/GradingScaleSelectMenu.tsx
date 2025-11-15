@@ -4,7 +4,7 @@ import Select  from '@mui/material/Select';
 import { useContext, useState } from 'react';
 import UserDashboardContext from '../../../store/UserDashboardContext';
 
-
+// This helps to change the grade from 4 point to a 5 point scale
 
 const GradeScaleSelectMenu = () => {
   const [gradeScale, setGradeScale] = useState<'fourPoint' | 'fivePoint'>('fivePoint');
