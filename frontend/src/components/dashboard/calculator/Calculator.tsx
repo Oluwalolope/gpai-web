@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import UserDashboardContext, { type Course } from "../../../store/UserDashboardContext";
 import CourseRow from "./CourseRow";
 import { calculateGPAForCourses } from "../util/calculations";
-import GradeScaleSelectMenu from "../settings/GradingScaleSelectMenu";
+import GradeScaleSelectMenu from "../Settings/GradingScaleSelectMenu";
 
 // --- Reusable Helper Functions ---
 
